@@ -28,7 +28,7 @@ def inicio():
             if elemento not in copia:
                 copia.append(elemento)
 
-        # lista repassada em argumento com formato string, pois o método de compilação não é compatível à type: list.
+        # lista repassada em argumento com formato string, pois o método de compilação de padrões não é compatível à type: list.
         telefone_email(str(copia))
 
     else:  # Identificar o tipo de argumento passado.
