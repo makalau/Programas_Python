@@ -3,6 +3,7 @@ from random import randint
 import sys
 import re
 import os
+#testando algo
 
 try:
     def jogo():
