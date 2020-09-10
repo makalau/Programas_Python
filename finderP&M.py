@@ -71,11 +71,11 @@ def telefone_email(texto):
 
     telefone = re.compile(r"""((\d{2}|\(\d{2}\))
                             (\s|-|\.)?
-                            \d{5}
+                            \d{4,5}
                             (\s|-|\.)?
                             \d{4})""", re.VERBOSE)
 
-    email = re.compile(r"(\w+@(hotmail|outlook)\.com(\.br)?)")
+    email = re.compile(r"(\w+@\w+\.com(\.br)?)")
 
     procurar_email = email.findall(texto)
     procurar = telefone.findall(texto)
