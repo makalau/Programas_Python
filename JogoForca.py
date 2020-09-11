@@ -20,13 +20,13 @@ try:
             padrao = re.compile(r"\w+\.txt")
             procurar = padrao.search(argv)
 
-            if procurar == None:
+            if procurar:
 			#se o argumento passado não for um arquivo de texto, programa irá rejeitar e encerrar.
-                print("Digite um argumento válido para arquivo de texto com extensão .txt")
+                abertura(argv)                
 
             else:
-                abertura(argv)
-
+                print("Digite um argumento válido para arquivo de texto com extensão .txt")
+                print('Atualizado  ;)')
 
     def abertura(argumento):
 	
@@ -66,16 +66,24 @@ try:
 
 
     def pegar_palavra(argumento):
-        arquivo = open(argumento, "r")
-        palavras = list()
-	# a lista chamada palavra, irá clonar todas palavras do arquivo de texto e em seguida fechá-lo.
-        for linha in arquivo:
-            palavras.append(linha)
-        arquivo.close()
+        try:
+            arquivo = open(argumento, "r")
         
-        misto = randint(0, len(palavras) - 1)
-        palavra_escolhida = palavras[misto].lower().strip()
-        analise_jogo(palavra_escolhida)
+        except FileNotFoundError:
+            
+            print("Arquivo não encontrado! finalizando programa....")
+            sys.exit()
+
+        else:
+            palavras = list()
+	    # a lista chamada palavra, irá clonar todas palavras do arquivo de texto e em seguida fechá-lo.
+            for linha in arquivo:
+                palavras.append(linha)
+            arquivo.close()
+        
+            misto = randint(0, len(palavras) - 1)
+            palavra_escolhida = palavras[misto].lower().strip()
+            analise_jogo(palavra_escolhida)
 
 
     def analise_jogo(palavra_chave):
