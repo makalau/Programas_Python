@@ -3,15 +3,23 @@ from random import randint
 import sys
 import re
 import os
-#testando algo
+
 
 try:
     def jogo():
         if len(sys.argv) < 2:
+<<<<<<< HEAD
             print()
             # Se não for passado nenhum argumento, a mensagem abaixo será mostrada e em seguida finalizar o programa.
             print("passe um arquivo.txt como argumento\ncontendo palavras que gostaria que fosse usadas para o jogo.")
             print()
+=======
+            print("-" * 80)
+            # Se não for passado nenhum argumento, a mensagem abaixo será mostrada e em seguida finalizar o programa.
+            print("\033[1;33mPasse um arquivo.txt como argumento:\n - Contendo palavras que gostaria que "
+                  "fosse usadas no jogo.")
+            print("\033[1;m","-" * 79)
+>>>>>>> desenvolvendo
             sys.exit()
 
         else:
@@ -25,7 +33,17 @@ try:
                 print("Digite um argumento válido para arquivo de texto com extensão .txt")
 
             else:
-                abertura(argv)
+                try:
+                    arquivo =  open(argv, "r")
+
+                except FileNotFoundError:
+                    print("-" * 80)
+                    print("\033[1;33mArquivo não encontrado. Coloque-o na pasta do programa e verifique a "
+                          "ortografia.\033[1;m")
+                    print("-" * 80)
+                else:
+                    arquivo.close()
+                    abertura(argv)
 
 
     def abertura(argumento):
@@ -84,14 +102,20 @@ try:
         erro = 0
         cont = 0
         resposta = ''
-        while erro <= 4 or resposta != 'chute':
+        while erro < 5 or resposta != 'chute':
             cont += 1
-            if erro == 4:
+            if erro == 5:
                 enforcado(palavra_chave)
                 break
 
             print()
-            print(f'\033[1;31m{cont}ª Tentativa!  Total de erros: {erro}\033[m')
+            if erro == 4:
+                print()
+                print(f"\033[1;31mATENÇÃO: \033[1;mÚLTIMA tentativa! \033[1;mtotal de erros: \033[1;31m{erro}\033[1;m")
+                print()
+            
+            else:
+                print(f'\033[1;33m{cont}ª Tentativa!  \033[1;mTotal de erros: \033[1;31m{erro}\033[1;m')
 
             for elemento in variavel:
                 print(elemento, end=' ')
@@ -140,12 +164,25 @@ try:
                     sleep(2)
                     erro += 1
                     print()
+<<<<<<< HEAD
                     print(f'\033[1;mNão tem essa letra na palavra.', end='')
 
                     if erro < 6:
                         print(f'\033[1;31mCUIDADO\033[1;m: você errou \033[1;31m{erro}\033[1;m vezes.')
+=======
+                    if erro <= 4:
+                        print(f'\033[1;mNão tem essa letra na palavra.', end='')
+                    
+                    if erro < 4:
+                        print(f'\033[1;31m CUIDADO\033[1;m: você errou: \033[1;31m{erro}\033[1;m', end=' ')
+                        if erro == 1:
+                            print("vez.")
+                        else:
+                            print("vezes.")
+>>>>>>> desenvolvendo
                         sleep(1)
                         print()
+
 
                 if resposta == 'chute':
                     chute(palavra_chave)

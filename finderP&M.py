@@ -28,7 +28,8 @@ def inicio():
             if elemento not in copia:
                 copia.append(elemento)
 
-        # lista repassada em argumento com formato string, pois o método de compilação de padrões não é compatível à type: list.
+        # lista repassada em argumento com formato string, pois o método de compilação de padrões não é compatível ao-
+        #-type: list.
         telefone_email(str(copia))
 
     else:  # Identificar o tipo de argumento passado.
@@ -36,7 +37,26 @@ def inicio():
         padrao_argumento = re.compile(r"\w+.txt")
         objeto = padrao_argumento.search(argumento)
 
-        if objeto==None:  # Critérios para a entrada de argumentos
+        # Critérios para a entrada de argumentos
+        if objeto:
+            try:
+                arquivo = open(argumento, "r")
+
+            except FileNotFoundError:
+                print('\033[m-' * 72)
+                print("\033[1;33mArquivo não encontrado. \033[mVerifique se o arquivo está na pasta do programa.")
+                print('-' * 72)
+                print()
+
+            else:
+                arquivo.close()
+            # OPÇÃO 1 - Varrer arquivo de texto e chamar a função de manipulação de documentos.txt para encontrar padrões.
+                print(f"\033[mAnalizando o documento {objeto.group()} (processando....)")
+                sleep(2)
+                print()
+                documento(argumento)
+        
+        else:
             print(" " * 4, "\033[1;31mATENÇÃO:\033[1;36m")
             print(' '*11, '+' + '-'*44 + '+')
             print(" "*11, "|\033[m-insira um documento com extensão: \033[1;31m.txt\033[1;36m", " "*3, "|")
@@ -44,12 +64,6 @@ def inicio():
             print(" "*11, "+" + "-"*44 + "+\033[m")
             print()
 
-        else:
-            # OPÇÃO 1 - Varrer arquivo de texto e chamar a função de manipulação de documentos.txt para encontrar padrões.
-            print(f"\033[mAnalizando o documento {objeto.group()} (processando....)")
-            sleep(2)
-            print()
-            documento(argumento)
 
 
 def documento(arquivo):
