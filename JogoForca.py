@@ -8,18 +8,11 @@ import os
 try:
     def jogo():
         if len(sys.argv) < 2:
-<<<<<<< HEAD
-            print()
-            # Se não for passado nenhum argumento, a mensagem abaixo será mostrada e em seguida finalizar o programa.
-            print("passe um arquivo.txt como argumento\ncontendo palavras que gostaria que fosse usadas para o jogo.")
-            print()
-=======
             print("-" * 80)
             # Se não for passado nenhum argumento, a mensagem abaixo será mostrada e em seguida finalizar o programa.
             print("\033[1;33mPasse um arquivo.txt como argumento:\n - Contendo palavras que gostaria que "
                   "fosse usadas no jogo.")
             print("\033[1;m","-" * 79)
->>>>>>> desenvolvendo
             sys.exit()
 
         else:
@@ -28,11 +21,7 @@ try:
             padrao = re.compile(r"\w+\.txt")
             procurar = padrao.search(argv)
 
-            if procurar == None:
-                # se o argumento passado não for um arquivo de texto, programa irá rejeitar e encerrar.
-                print("Digite um argumento válido para arquivo de texto com extensão .txt")
-
-            else:
+            if procurar:
                 try:
                     arquivo =  open(argv, "r")
 
