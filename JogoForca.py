@@ -9,27 +9,27 @@ try:
     def jogo():
         if len(sys.argv) < 2:
             print()
-		   #Se não for passado nenhum argumento, a mensagem abaixo será mostrada e em seguida finalizar o programa.
+            # Se não for passado nenhum argumento, a mensagem abaixo será mostrada e em seguida finalizar o programa.
             print("passe um arquivo.txt como argumento\ncontendo palavras que gostaria que fosse usadas para o jogo.")
             print()
             sys.exit()
 
         else:
-            #Análise de entrada do argumento. programa aceita apenas arquivos com extensão (txt) de texto.
+            # Análise de entrada do argumento. programa aceita apenas arquivos com extensão (txt) de texto.
             argv = sys.argv[1]
             padrao = re.compile(r"\w+\.txt")
             procurar = padrao.search(argv)
 
-            if procurar:
-			#se o argumento passado não for um arquivo de texto, programa irá rejeitar e encerrar.
-                abertura(argv)                
+            if procurar == None:
+                # se o argumento passado não for um arquivo de texto, programa irá rejeitar e encerrar.
+                print("Digite um argumento válido para arquivo de texto com extensão .txt")
 
             else:
-                print("Digite um argumento válido para arquivo de texto com extensão .txt")
-                print('Atualizado  ;)')
+                abertura(argv)
+
 
     def abertura(argumento):
-	
+
         print('' * 5, '\033[1;mIniciando o Jogo', end='')
         for c in range(0, 4):
             print('.', end='')
@@ -60,30 +60,22 @@ try:
 
         elif opcoes == "s":
             encerramento()
-            
+
         else:
             pegar_palavra(argumento)
 
 
     def pegar_palavra(argumento):
-        try:
-            arquivo = open(argumento, "r")
-        
-        except FileNotFoundError:
-            
-            print("Arquivo não encontrado! finalizando programa....")
-            sys.exit()
+        arquivo = open(argumento, "r")
+        palavras = list()
+        # a lista chamada palavra, irá clonar todas palavras do arquivo de texto e em seguida fechá-lo.
+        for linha in arquivo:
+            palavras.append(linha)
+        arquivo.close()
 
-        else:
-            palavras = list()
-	    # a lista chamada palavra, irá clonar todas palavras do arquivo de texto e em seguida fechá-lo.
-            for linha in arquivo:
-                palavras.append(linha)
-            arquivo.close()
-        
-            misto = randint(0, len(palavras) - 1)
-            palavra_escolhida = palavras[misto].lower().strip()
-            analise_jogo(palavra_escolhida)
+        misto = randint(0, len(palavras) - 1)
+        palavra_escolhida = palavras[misto].lower().strip()
+        analise_jogo(palavra_escolhida)
 
 
     def analise_jogo(palavra_chave):
@@ -92,9 +84,9 @@ try:
         erro = 0
         cont = 0
         resposta = ''
-        while erro <= 4 or resposta != 'chute':
+        while erro <= 5 or resposta != 'chute':
             cont += 1
-            if erro == 4:
+            if erro == 6:
                 enforcado(palavra_chave)
                 break
 
@@ -117,26 +109,28 @@ try:
                     valida = 1
 
             letras_chute.append(resposta)
-	    
-            #Limpeza de tela multiplataforma, se for windows "cls" se for Linux(posix) "clear"
-            os.system("clear" if os.name == "posix" else "cls")
-            
+
+            # Limpeza de tela multiplataforma, se for windows "cls" se for Linux(posix) "clear"
+            os.system("cls" if os.name == "nt" else "clear")
+
             print("\033[33mletras chutadas até agora: ", end=" ")
             for letras in letras_chute:
-                print(f"{letras}",end=" ")
-            
+                print(f"{letras}", end=" ")
+
             print("\033[37m\npressione Ctrl+c a qualquer momento caso queira sair do programa.")
             print('-' * 80, '\033[m')
             sleep(0.2)
             print()
-            
+
             if resposta in palavra_chave:
                 print('\033[1;36mprocessando...\033[1;m')
                 sleep(2)
                 print()
-                print(f'\033[1;mExistem \033[1;33m{palavra_chave.count(resposta)}\033[1;m ocorrências da palavra "\033[1;33m{resposta}\033[1;m"')
+                print(
+                    f'\033[1;mExistem \033[1;33m{palavra_chave.count(resposta)}\033[1;m ocorrências da palavra '
+                    f'"\033[1;33m{resposta}\033[1;m"')
                 sleep(1)
-                
+
                 for posicao, elemento in enumerate(palavra_chave):
                     if elemento == resposta:
                         variavel[posicao] = resposta
@@ -147,7 +141,7 @@ try:
                     erro += 1
                     print()
                     print(f'\033[1;mNão tem essa letra na palavra.', end='')
-                    
+
                     if erro < 6:
                         print(f'\033[1;31mCUIDADO\033[1;m: você errou \033[1;31m{erro}\033[1;m vezes.')
                         sleep(1)
@@ -209,10 +203,10 @@ try:
 
     def continua():
         pergunta = input("\033[mdeseja jogar novamente?[s/n]: ").strip().lower()
-        
+
         if pergunta == "s":
             abertura(sys.argv[1])
-        
+
         else:
             encerramento()
 
@@ -226,10 +220,18 @@ try:
         print(" " * 16, "\033[33mPrograma finalizado com Sucesso!")
         print(" " * 27, "Volte Sempre!\033[m")
         print('-' * 80)
-        print()        
+        print()
 
 
     jogo()
-
 except KeyboardInterrupt:
-    encerramento()
+    os.system("cls" if os.name == "nt" else "clear")
+    print("encerrando o programa....")
+    sleep(2)
+    print()
+    print('-' * 80)
+    print(" " * 16, "\033[33mPrograma finalizado com Sucesso!")
+    print(" " * 27, "Volte Sempre!\033[m")
+    print('-' * 80)
+    print()
+
