@@ -8,11 +8,11 @@ import os
 try:
     def jogo():
         if len(sys.argv) < 2:
-            print("-" * 80)
+            print("-" * 72)
             # Se não for passado nenhum argumento, a mensagem abaixo será mostrada e em seguida finalizar o programa.
             print("\033[1;33mPasse um arquivo.txt como argumento:\n - Contendo palavras que gostaria que "
                   "fosse usadas no jogo.")
-            print("\033[1;m","-" * 79)
+            print("\033[1;m","-" * 72)
             sys.exit()
 
         else:
@@ -26,15 +26,17 @@ try:
                     arquivo =  open(argv, "r")
 
                 except FileNotFoundError:
-                    print("-" * 80)
+                    print("-" * 72)
                     print("\033[1;33mArquivo não encontrado. Coloque-o na pasta do programa e verifique a "
                           "ortografia.\033[1;m")
-                    print("-" * 80)
+                    print("-" * 72)
                 else:
                     arquivo.close()
                     abertura(argv)
-
-
+            else:
+                print("-"*72)
+                print("\033[1;33mArquivo de texto não identificado. insira: nome_arquivo.txt\033[m")
+                print("-"*72)
     def abertura(argumento):
 
         print('' * 5, '\033[1;mIniciando o Jogo', end='')
@@ -52,7 +54,7 @@ try:
         opcoes = str(input('\033[1;mResponda: ').strip().lower())
 
         if opcoes == 'i':
-            print("-" * 89)
+            print("-" * 72)
             print('Intruções: Se trata de um jogo de adivinhação.\nVocê terá que adivinhar qual a Palavra-Chave.'
                   'Poderá usar desde pequenos chutes de letras-\n-que acredita compor a palavra,'
                   ' até chutes de palavras completas.\n'
@@ -60,7 +62,7 @@ try:
                   '   * Se chutar 4 letras que a palavra não contém é GAME OVER. '
                   '\n   * Caso queira arriscar um chute ao invés de digitar uma letra digite a palavra: Chute.')
 
-            print("-" * 89)
+            print("-" * 72)
             print('Digite alguma letra para saber se ela está contida na palavra-chave:')
             print()
             pegar_palavra(argumento)
@@ -91,35 +93,42 @@ try:
         erro = 0
         cont = 0
         resposta = ''
+
         while erro < 5 or resposta != 'chute':
             cont += 1
             if erro == 5:
                 enforcado(palavra_chave)
                 break
+                
 
-            print()
-            if erro == 4:
+            if str("".join(variavel)) == palavra_chave:
+                print(f"\033[1;33mPARABÉNS! VOCÊ VENCEU!!\n\033[mPalavara chave era: {palavra_chave.title()}")
+                vencedor()
+                break
+
+            elif erro == 4:
                 print()
                 print(f"\033[1;31mATENÇÃO: \033[1;mÚLTIMA tentativa! \033[1;mtotal de erros: \033[1;31m{erro}\033[1;m")
                 print()
-            
+
             else:
-                print(f'\033[1;33m{cont}ª Tentativa!  \033[1;mTotal de erros: \033[1;31m{erro}\033[1;m')
+                print()
+                print(f'\033[1;33m{cont}ª Tentativa!  \033[1;mTotal de erros: \033[1;31m{erro}\033[1;m') 
 
             for elemento in variavel:
                 print(elemento, end=' ')
             print()
             print()
-            valida = 0
+            
 
-            while valida == 0:
+            while True:
                 resposta = str(input('\033[1;mDigite uma letra: ').lower().strip())
 
                 if len(resposta) > 1 and resposta != "chute":
                     print("\n\033[31mEntrada inválida!\033[m Digite apenas uma letra.")
-                    valida = 0
+                    
                 else:
-                    valida = 1
+                    break
 
             letras_chute.append(resposta)
 
@@ -147,18 +156,14 @@ try:
                 for posicao, elemento in enumerate(palavra_chave):
                     if elemento == resposta:
                         variavel[posicao] = resposta
+                   
             else:
                 if resposta != 'chute':
                     print('\033[1;36mprocessando...\033[m')
                     sleep(2)
                     erro += 1
                     print()
-<<<<<<< HEAD
-                    print(f'\033[1;mNão tem essa letra na palavra.', end='')
 
-                    if erro < 6:
-                        print(f'\033[1;31mCUIDADO\033[1;m: você errou \033[1;31m{erro}\033[1;m vezes.')
-=======
                     if erro <= 4:
                         print(f'\033[1;mNão tem essa letra na palavra.', end='')
                     
@@ -168,7 +173,6 @@ try:
                             print("vez.")
                         else:
                             print("vezes.")
->>>>>>> desenvolvendo
                         sleep(1)
                         print()
 
@@ -182,7 +186,7 @@ try:
         chute_certo = input('\033[1;mDigite a palavra que acredita ser: ').strip().lower()
         if chute_certo == chave:
             print()
-            print(f'\033[1;32mPARABÉNS!! Você acertou a palavra chave é: \033[1;m{chave}')
+            print(f'\033[1;33mPARABÉNS!! \033[mVocê acertou a palavra chave é: \033[1;33m{chave}\033[m')
             vencedor()
 
         else:
@@ -247,7 +251,7 @@ try:
         print(" " * 27, "Volte Sempre!\033[m")
         print('-' * 80)
         print()
-
+        
 
     jogo()
 except KeyboardInterrupt:
