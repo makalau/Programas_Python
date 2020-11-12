@@ -1,4 +1,4 @@
-#! python3
+#! python3.6
 # Programa para a identificação e obtenção de dados específicos em ambiente web ou documentos de textos.
 # O programa conta com 2 funcionalidades via pyperclip(texto copiado pelo sistema) ou manipulando arquivos.txt
 
