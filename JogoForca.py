@@ -1,3 +1,7 @@
+# python 3.6
+'''Jogo da Forca, esse jogo necessita de um documento extensão .txt na mesma pasta do programa, para a obtenção 
+das palavras-chave que serão utilizada no jogo.''' 
+
 from time import sleep
 from random import randint
 import sys
