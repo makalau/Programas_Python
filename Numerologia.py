@@ -1,5 +1,9 @@
-# Python 3.6
-# Numerologia Cabalística, tabela de acordo com o site: www.astrocentro.com.br/blog/numerologia/numerologia-cabalistica.
+'''Python 3.6
+Esse programa usa um método de cálculo baseado na ordem alfabética do hebraico e regras da numerologia cabalística para
+identificar o número correspondente ao nome completo de uma pessoa e as energias que emanam sobre ela. Onde cada letra do
+alfabeto se identifica por um número específico (conforme a tabela).
+fonte: Tabela base extraída do site: www.astrocentro.com.br/blog/numerologia/numerologia-cabalistica.'''
+
 lista = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
          'u', 'v', 'w', 'x', 'y', 'z']
 
