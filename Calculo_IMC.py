@@ -1,6 +1,6 @@
 # python 3.6
 """ Programa que usa fórmulas e parâmetros reais para calcular o IMC, e identificar a classificação de acordo com os
-dados expostos pelo Ministério da Saúde no que se refere a qualidade do IMC. Vamos lá"""
+dados expostos pelo Ministério da Saúde no que se refere a qualidade do IMC."""
 
 from time import sleep
 # =-=-==-= Cores =-=-=-=-=-=
