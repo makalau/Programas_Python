@@ -1,7 +1,7 @@
 # python 3.6
 """ Programa que usa fórmulas e parâmetros reais para calcular o IMC, e identificar a classificação de acordo com os
 dados expostos pelo Ministério da Saúde no que se refere a qualidade do IMC."""
-
+from os import system
 from time import sleep
 # =-=-==-= Cores =-=-=-=-=-=
 amarelo = '\033[1;32m'
@@ -45,6 +45,12 @@ def calculo():
         elif 18.5 > imc:
             print('ATENÇÃO, está abaixo do IMC recomendado.')
 
-
-estrutura_geral()
-
+try:
+    estrutura_geral()
+except KeyboardInterrupt:
+    system('clear')
+    print('\nFinalizando o programa...')
+    sleep(1.5)
+print('-'*30)
+print('Volte Sempre!'.center(32, ' '))
+print('-'*30)
