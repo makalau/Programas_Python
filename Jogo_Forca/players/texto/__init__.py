@@ -7,15 +7,15 @@ def titulo(texto, texto2=None):
 	print(texto.center(80, ' '))
 	if texto2:
 		print('\033[1;m', texto2.center(80, ' '))
-	print('\033[1;33m','-' * 80)
+	print('\033[1;33m','-' * 80, '\033[1;m')
 	print()
 	print()
 
 def linha():
 	print('-' * 80)
 
-def centro(texto):
-        print(texto.center(90, ' '))
+def centro(texto, tam):
+        print(texto.center(tam, ' '))
 
 
 def loading(texto, sec=0.5):

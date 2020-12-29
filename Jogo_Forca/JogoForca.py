@@ -52,15 +52,15 @@ class Jogo(jogadores.Jogador):
 			print('.', end='', flush=True)
 			sleep(0.5)
 		print('\033[1;36m')
-		print(' ' * 17, '+------------------------+')
-		print(' ' * 17, '|      Jogo Da Forca     |')
-		print(' ' * 17, '+------------------------+\033[m')
-		print(' ' * 24, '\033[1;mMenu Princial\033[1;36m')
-		print('+-----------------+------------------+-------------------------+')
-		print('| [i]-Instruções  | Enter - Continue | S - Sair | R - Ranking  |')
-		print('+-----------------+------------------+-------------------------+\033[m')
-
-		opcoes = str(input('\033[1;mResponda: ').strip().lower())
+		texto.centro('+------------------------+', 80)
+		texto.centro('|      Jogo Da Forca     |', 80)
+		texto.centro('+------------------------+\033[m', 83)
+		texto.centro('\033[1;mMenu Princial\033[1;36m', 95)
+		texto.centro('+-----------------+------------------+-------------------------+', 80)
+		texto.centro('| [i]-Instruções  | Enter - Continue | S - Sair | R - Ranking  |', 80)
+		texto.centro('+-----------------+------------------+-------------------------+\033[m', 83)
+		print()
+		opcoes = str(input('\033[1;m[ Responda ]: ').strip().lower())
 
 		if opcoes == 'i':
 			print("-" * 72)
@@ -132,19 +132,24 @@ class Jogo(jogadores.Jogador):
 			nome = self.nome[0]
 		else:
 			nome = self.venceu
-
+		print('Para voltar ao Menu Principal, responda: [ 0 ]')
 		while erro < 5 or resposta != 'chute':
-			print(f'\033[1;33mDica:\033[1;m A palavra possui {len(palavra_chave)} letras')
 			print()
 			cont += 1
 			if erro == 5:
+				if len(self.nome) > 1:
+					print(f"\033[1;31m\nGAME OVER! VOCÊS FORAM ENFORCADOS!", end=" ")
+					print(f"\033[mA palavra certa era:\033[1;33m {palavra_chave}\033[m")
+				else:
+					print(f"\033[1;31m\nGAME OVER! VOCÊ FOI ENFORCADO!", end=" ")
+					print(f"\033[mA palavra certa era:\033[1;33m {palavra_chave}\033[m")
 				self.enforcado(palavra_chave)
 				break
                 
 
 			if str("".join(variavel)) == palavra_chave:
 				print(f"\033[1;33mPARABÉNS! VOCÊ VENCEU!!\n\033[mPalavara chave era: {palavra_chave.title()}")
-				vencedor(nome)
+				self.vencedor(nome)
 				break
 
 			elif erro == 4:
@@ -154,7 +159,8 @@ class Jogo(jogadores.Jogador):
 
 			else:
 				texto.linha()
-				print(f'\033[33m{cont}ª Tentativa!  \033[mTotal de erros: \033[1;31m{erro}\033[1;m') 
+				print(f'\033[33m{cont}ª Tentativa!  \033[mTotal de erros: \033[1;31m{erro}\033[1;m', end='') 
+				print(f'\033[1;33mDica:\033[1;m A palavra possui {len(palavra_chave)} letras'.rjust(50, ' '))
 			print('\n'*2)
 			print('\033[1;36mPalavra_chave:\033[1;m  ', end=' ')
 			for elemento in variavel:
@@ -163,10 +169,20 @@ class Jogo(jogadores.Jogador):
 				print('\n'*1)
 				texto.linha()
 				resposta = str(input(f'\033[1;33m[ {nome} ] \033[1;m- Digite uma letra: ').lower().strip())
-				if len(resposta) > 1 and resposta != "chute":
+				while not resposta or len(resposta) > 1 or resposta.isnumeric() and resposta != '0':
+					print()
+					print('Entrada inválida! Digite apenas uma letra')
+					print()
+					resposta = str(input(f'\033[1;33m[ {nome} ] \033[1;m- Digite uma letra: ').lower().strip())
+					
+				if resposta == '0':
+					self.abertura()
+
+				elif len(resposta) > 1 and resposta != "chute":
 					print("\n\033[31mEntrada inválida!\033[m Digite apenas uma letra.")				        
+				
 				else:
-					break
+					break	
 			letras_chute.append(resposta)
 
 			# Limpeza de tela multiplataforma, se for windows "cls" se for Linux(posix) "clear"
@@ -176,14 +192,14 @@ class Jogo(jogadores.Jogador):
 			for letras in letras_chute:
 				print(f"{letras}", end=" ")
 
-			print("\033[37m\npressione Ctrl+c a qualquer momento caso queira sair do programa.")
+			print("\033[37m\npressione Ctrl+c a qualquer momento caso queira sair do programa ou responda [ 0 ] - Menu")
 			print('-' * 80, '\033[m')
 			sleep(0.2)
 			print()
 
 			if resposta in palavra_chave:
 				texto.loading('Processando')
-				print('Para voltar ao Menu Principal, responda: [ 0 ]')
+
 				print(
                     f'\033[1;mExistem \033[1;33m{palavra_chave.count(resposta)}\033[1;m ocorrências da palavra '
                     f'"\033[1;33m{resposta}\033[1;m"')

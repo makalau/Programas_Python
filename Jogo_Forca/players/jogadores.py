@@ -1,6 +1,8 @@
 import json
 from os import system
 import sys
+from operator import itemgetter
+from players import texto
 
 class Jogador:
 	def __init__(self):
@@ -31,10 +33,19 @@ class Jogador:
 			json.dump(self.jogadores, cadastro)
 
 	def consulta(self):
-		for k, v in self.jogadores.items():
-			print(f'Usuário: {k:^10} |  pontos: {v}'.center(80, ' '))
-
-
+		texto.titulo('Ranking dos Jogadores!')
+		print(f'jogadores cadastrados: {len(self.jogadores)}')
+		print('\n'*2)
+		texto.linha()
+		order = list()
+		order = sorted(self.jogadores.items(), key=itemgetter(1), reverse=True)
+		print(f'{"POSIÇÃO":<17}{"NOME":<13}{"PONTUAÇÃO	":>12}'.center(79, ' '))
+		texto.linha()		
+		for p, v in enumerate(order):
+			print(f'{p+1}ºlugar - {v[0]:^20} - {v[1]} pontos'.center(80, ' '))
+			texto.linha()
+		print()
+	
 
 
 	def set_ponto(self, user):
