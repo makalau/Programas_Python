@@ -1,0 +1,14 @@
+Uso: rmdir [OPÇÃO]... DIRETÓRIO... Remove o(s) DIRETÓRIO(s), se 
+estiver(em) vazio(s).
+      --ignore-fail-on-non-empty ignora toda falha que ocorrer só por 
+                  não estar vazio
+  -p, --parents remove DIRETÓRIO e seus ancestrais; ex.: "rmdir -p 
+  a/b/c"
+                     é similar a "rmdir a/b/c a/b a" -v, --verbose emite 
+  um diagnóstico para cada diretório processado
+      --help mostra esta ajuda e sai --version informa a versão e sai 
+Página de ajuda do GNU coreutils: 
+<https://www.gnu.org/software/coreutils/> Relate erros de tradução do 
+rmdir: <https://translationproject.org/team/pt_BR.html> Documentação 
+completa em: <https://www.gnu.org/software/coreutils/rmdir> ou 
+disponível localmente via: info "(coreutils) rmdir invocation"
