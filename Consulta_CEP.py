@@ -1,5 +1,4 @@
-﻿import requests
-from os import system
+﻿from os import system
 from time import sleep
 import requests
 import platform
